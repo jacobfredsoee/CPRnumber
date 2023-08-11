@@ -87,3 +87,7 @@ bool isValid = cpr1.DoesPassModulus();
 
 // Determine the gender associated with the CPR number
 bool isMale = cpr1.IsMale();
+```
+
+## License
+This project is licensed under the MIT License. Feel free to use and modify the code as needed.
