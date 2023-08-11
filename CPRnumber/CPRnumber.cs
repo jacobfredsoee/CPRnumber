@@ -16,13 +16,26 @@ namespace CPRnumber
 
 
         /// <summary>
-        /// Initializes a new instance of the CPRnumber class with the provided CPR number.
+        /// Initializes a new instance of the CPRnr class with the provided CPR number.
         /// </summary>
         /// <param name="cprNumber">The CPR number to be processed. Accepts numbers with and without leading 0 and/or dash.</param>
         /// <exception cref="Exception">Thrown when the provided CPR number is not in a recognizable format.</exception>
         public CPRnr(string cprNumber) {
+            InitializeFromInput(cprNumber);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the CPRnr class with the provided CPR number.
+        /// </summary>
+        /// <param name="cprNumber">The CPR number to be processed. Accepts numbers with and without leading 0 and/or dash.</param>
+        /// <exception cref="Exception">Thrown when the provided CPR number is not in a recognizable format.</exception>
+        public CPRnr(long cprNumber) {
+            InitializeFromInput(cprNumber.ToString());
+        }
+
+        private void InitializeFromInput(string input) {
             // Remove dashes from the input CPR number
-            cprTrimmed = cprNumber.Replace("-", "");
+            cprTrimmed = input.Replace("-", "");
 
             // Check if the trimmed CPR number is a valid integer
             if (!long.TryParse(cprTrimmed, out _)) {
@@ -40,6 +53,13 @@ namespace CPRnumber
 
             // Create the CPR number with dashes
             cprWithDash = cprNoDash.Substring(0, 6) + "-" + cprNoDash.Substring(6, 4);
+
+            //Test if the CPR number can be turned into a valid date
+            try {
+                _ = GetBirthday();
+            } catch (Exception) {
+                throw new Exception("CPR not in a valid date format");
+            }
         }
 
 
